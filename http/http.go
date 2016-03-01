@@ -8,7 +8,7 @@ import (
 	_ "net/http/pprof"
 	"time"
 
-	"github.com/open-falcon/graph/g"
+	"github.com/Cepave/graph/g"
 )
 
 type Dto struct {
