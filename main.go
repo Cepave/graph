@@ -8,11 +8,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/open-falcon/graph/api"
-	"github.com/open-falcon/graph/g"
-	"github.com/open-falcon/graph/http"
-	"github.com/open-falcon/graph/index"
-	"github.com/open-falcon/graph/rrdtool"
+	"github.com/Cepave/graph/api"
+	"github.com/Cepave/graph/g"
+	"github.com/Cepave/graph/http"
+	"github.com/Cepave/graph/index"
+	"github.com/Cepave/graph/rrdtool"
 )
 
 func start_signal(pid int, cfg *g.GlobalConfig) {
@@ -40,7 +40,7 @@ func start_signal(pid int, cfg *g.GlobalConfig) {
 			log.Println("rpc stop ok")
 
 			rrdtool.Out_done_chan <- 1
-			rrdtool.FlushAll()
+			rrdtool.FlushAll(true)
 			log.Println("rrdtool stop ok")
 
 			log.Println(pid, "exit")
@@ -68,8 +68,7 @@ func main() {
 	g.ParseConfig(*cfg)
 	// init db
 	g.InitDB()
-
-	// start rrdtool
+	// rrdtool before api for disable loopback connection
 	rrdtool.Start()
 	// start api
 	go api.Start()
